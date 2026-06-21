@@ -16,6 +16,9 @@ pipeline {
 
         stage('Deploy Containers') {
             steps {
+                withCredentials([file(credentialsId: 'app-env-file', variable: 'ENV_FILE')]) {
+                    sh 'cp "$ENV_FILE" .env'
+                }
                 sh 'docker compose up -d'
             }
         }
